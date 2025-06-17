@@ -1,13 +1,11 @@
 #include <vector>
-
-// if the Polygon class name conflicts with a class in wingdi.h on Windows, use a namespace or change the name
-class Polygon {  
-public:
-    std::vector<Vector> vertices;
-};  
+#include "writer.h"
+#include <fstream>
+#include <sstream>
  
 // saves a static svg file. The polygon vertices are supposed to be in the range [0..1], and a canvas of size 1000x1000 is created
-    void save_svg(const std::vector<Polygon> &polygons, std::string filename, std::string fillcol = "none") {
+    void save_svg(const std::vector<Polygon> &polygons, std::string filename, std::string fillcol) {
+
         FILE* f = fopen(filename.c_str(), "w+"); 
         fprintf(f, "<svg xmlns = \"http://www.w3.org/2000/svg\" width = \"1000\" height = \"1000\">\n");
         for (int i=0; i<polygons.size(); i++) {
