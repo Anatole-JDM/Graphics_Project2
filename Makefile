@@ -3,14 +3,24 @@ CC = gcc
 CXXFLAGS = -std=c++11 -O2 -Wall
 CFLAGS = -O2 -Wall
 
-CPP_SRC = test_power_voronoi.cpp vector.cpp writer.cpp voronoi.cpp power_voronoi.cpp
+# Source files - removing optimal_transport.cpp since it doesn't exist
+CPP_SRC = vector.cpp writer.cpp voronoi.cpp power_voronoi.cpp
 C_SRC = lbfgs.c
-OBJ = $(CPP_SRC:.cpp=.o) $(C_SRC:.c=.o)
-EXE = test_power_voronoi
 
-all: $(EXE)
+# Power Voronoi target
+POWER_OBJ = test_power_voronoi.o $(CPP_SRC:.cpp=.o) $(C_SRC:.c=.o)
+POWER_EXE = test_power_voronoi
 
-$(EXE): $(OBJ)
+# SDOT target (without optimal_transport since it doesn't exist)
+SDOT_OBJ = test_SDOT.o $(CPP_SRC:.cpp=.o) $(C_SRC:.c=.o)
+SDOT_EXE = test_sdot
+
+all: $(POWER_EXE) $(SDOT_EXE)
+
+$(POWER_EXE): $(POWER_OBJ)
+	$(CXX) $(CXXFLAGS) -o $@ $^
+
+$(SDOT_EXE): $(SDOT_OBJ)
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
 %.o: %.cpp
@@ -20,4 +30,4 @@ $(EXE): $(OBJ)
 	$(CC) $(CFLAGS) -c $<
 
 clean:
-	rm -f $(OBJ) $(EXE)
+	rm -f *.o $(POWER_EXE) $(SDOT_EXE)
