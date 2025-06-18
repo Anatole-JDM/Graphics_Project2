@@ -1,9 +1,9 @@
 CXX = g++
 CXXFLAGS = -std=c++11 -O2 -Wall
 
-SRC = main.cpp vector.cpp writer.cpp voronoi.cpp
+SRC = test_power_voronoi.cpp vector.cpp writer.cpp voronoi.cpp power_voronoi.cpp
 OBJ = $(SRC:.cpp=.o)
-EXE = main
+EXE = test_power_voronoi
 
 all: $(EXE)
 
