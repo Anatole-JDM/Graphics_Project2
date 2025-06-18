@@ -15,12 +15,18 @@ POWER_EXE = test_power_voronoi
 SDOT_OBJ = test_SDOT.o $(CPP_SRC:.cpp=.o) $(C_SRC:.c=.o)
 SDOT_EXE = test_sdot
 
-all: $(POWER_EXE) $(SDOT_EXE)
+FLUIDS_OBJ = fluids.o $(CPP_SRC:.cpp=.o) $(C_SRC:.c=.o)
+FLUIDS_EXE = fluids
+
+all: $(POWER_EXE) $(SDOT_EXE) $(FLUIDS_EXE)
 
 $(POWER_EXE): $(POWER_OBJ)
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
 $(SDOT_EXE): $(SDOT_OBJ)
+	$(CXX) $(CXXFLAGS) -o $@ $^
+
+$(FLUIDS_EXE): $(FLUIDS_OBJ)
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
 %.o: %.cpp
@@ -30,4 +36,8 @@ $(SDOT_EXE): $(SDOT_OBJ)
 	$(CC) $(CFLAGS) -c $<
 
 clean:
-	rm -f *.o $(POWER_EXE) $(SDOT_EXE)
+	rm -f *.o $(POWER_EXE) $(SDOT_EXE) $(FLUIDS_EXE)
+	rm -f *.svg
+
+
+

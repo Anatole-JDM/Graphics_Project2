@@ -17,7 +17,6 @@ int main() {
         Vector(0.1,  0.1, 0.0),
     };
 
-    // Define weights for each site (varying weights to demonstrate the effect)
     std::vector<double> weights = {
         0.02,   // Small weight for site 0
         0.05,   // Medium weight for site 1
@@ -55,3 +54,4 @@ int main() {
     
     return 0;
 }
+

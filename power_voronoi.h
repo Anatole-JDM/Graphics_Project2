@@ -17,6 +17,12 @@ struct SDOTContext {
 
 double cell_area(const Polygon& poly);
 double norm_integral(const Polygon& poly, const Vector& site);
+void make_counter_clockwise(Polygon& poly);
+std::vector<double> OptimalTransport(
+    const std::vector<Vector>& sites,
+    const Polygon& bounding_box,
+    const std::vector<double>& lambdas
+);
 
 #include "lbfgs.h"
 

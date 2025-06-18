@@ -158,6 +158,36 @@ lbfgsfloatval_t evaluate(
 }
 
 
+std::vector<double> OptimalTransport( //wrapper, with gpt suggestions
+    const std::vector<Vector>& sites,
+    const Polygon& bounding_box,
+    const std::vector<double>& lambdas
+) {
+    size_t n = sites.size();
+    lbfgsfloatval_t* w = lbfgs_malloc(n);
+    for (size_t i = 0; i < n; ++i) {
+        w[i] = 0.1 * ((double)rand() / RAND_MAX - 0.5);
+    }
+
+    lbfgs_parameter_t param;
+    lbfgs_parameter_init(&param);
+    param.max_iterations = 500;
+    param.epsilon = 1e-7;
+
+    SDOTContext ctx = {sites, lambdas, bounding_box};
+    lbfgsfloatval_t fx;
+    int ret = lbfgs(n, w, &fx, evaluate, nullptr, &ctx, &param);
+
+    if (ret != LBFGS_SUCCESS) {
+        std::cerr << "LBFGS failed: " << lbfgs_strerror(ret) << std::endl;
+        throw std::runtime_error("Optimal transport optimization failed.");
+    }
+
+    std::vector<double> final_weights(w, w + n);
+    lbfgs_free(w);
+    return final_weights;
+}
+
 
 
 
